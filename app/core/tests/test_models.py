@@ -58,7 +58,10 @@ class ModelTests(TestCase):
 
     def test_create_vehicle(self):
         """Test creating a vehicle is successful"""
-        user = get_user_model().objects.create_user('test@example.com', 'testpass123', )
+        user = get_user_model().objects.create_user(
+            'test@example.com',
+            'testpass123',
+        )
         vehicle = models.Vehicle.objects.create(
             user=user,
             make='Sample vehicle make',
@@ -79,8 +82,10 @@ class ModelTests(TestCase):
     def test_create_specification(self):
         """Test creating a specification is successful"""
         user = create_user()
-        specification = models.Specification.objects.create(user=user, name='4x4')
-
+        specification = models.Specification.objects.create(
+            user=user,
+            name='4x4'
+        )
         self.assertEqual(str(specification), specification.name)
 
     @patch('core.models.uuid.uuid4')
@@ -91,4 +96,3 @@ class ModelTests(TestCase):
         file_path = models.vehicle_image_file_path(None, 'example.jpg')
 
         self.assertEqual(file_path, f'uploads/vehicle/{uuid}.jpg')
-
