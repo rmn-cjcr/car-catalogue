@@ -1,2 +1,2 @@
 # car catalogue
-Car catalogue for API project
+Car catalogue API project
