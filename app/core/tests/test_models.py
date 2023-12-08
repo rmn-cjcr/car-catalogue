@@ -1,9 +1,18 @@
 """
 Tests for models.
 """
+from unittest.mock import patch
+from decimal import Decimal
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+
+from core import models
+
+
+def create_user(email='user@example.com', password='testpass123'):
+    """Create and return a new user."""
+    return get_user_model().objects.create_user(email, password)
 
 
 class ModelTests(TestCase):
@@ -46,3 +55,40 @@ class ModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_create_vehicle(self):
+        """Test creating a vehicle is successful"""
+        user = get_user_model().objects.create_user('test@example.com', 'testpass123', )
+        vehicle = models.Vehicle.objects.create(
+            user=user,
+            make='Sample vehicle make',
+            model='Sample vehicle model',
+            price=Decimal('5.50'),
+            description='Sample vehicle description',
+        )
+
+        self.assertEqual(str(vehicle), vehicle.model)
+
+    def test_create_tag(self):
+        """Test creating a tag is successful"""
+        user = create_user()
+        tag = models.Tag.objects.create(user=user, name='Tag1')
+
+        self.assertEqual(str(tag), tag.name)
+
+    def test_create_specification(self):
+        """Test creating a specification is successful"""
+        user = create_user()
+        specification = models.Specification.objects.create(user=user, name='4x4')
+
+        self.assertEqual(str(specification), specification.name)
+
+    @patch('core.models.uuid.uuid4')
+    def test_vehicle_file_name_uuid(self, mock_uuid):
+        """Test generating image path."""
+        uuid = 'test-uuid'
+        mock_uuid.return_value = uuid
+        file_path = models.vehicle_image_file_path(None, 'example.jpg')
+
+        self.assertEqual(file_path, f'uploads/vehicle/{uuid}.jpg')
+
