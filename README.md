@@ -5,11 +5,6 @@ Welcome to the Car Catalog API! This Django project serves as a comprehensive AP
 ## Table of Contents
 - [Overview](#overview)
 - [API Endpoints](#api-endpoints)
-  - [Health Check](#health-check)
-  - [OpenAPI Schema](#openapi-schema)
-  - [User Management](#user-management)
-  - [Vehicle Management](#vehicle-management)
-  - [Specifications and Tags](#specifications-and-tags)
 - [Running the Server](#running-server)
 
 ## Overview
@@ -90,7 +85,7 @@ The Car Catalog API provides the following endpoints:
 - **Method**: `POST`
 - **Description**: Upload an image to a vehicle.
 
-## Running the server
+## Running server
 
 ### Local Development
 - **Build and run the Docker containers locally:**: `docker-compose -f docker-compose.yml up -d`
